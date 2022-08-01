@@ -1,5 +1,5 @@
 import * as api from '../api';
-import {FETCH_POST, START_LOADING, END_LOADING, FETCH_BY_SEARCH, FETCH_ALL, DELETE, CREATE, UPDATE, LIKE} from '../constants/actionTypes'
+import {FETCH_POST, START_LOADING, END_LOADING, FETCH_BY_SEARCH, FETCH_ALL, DELETE, CREATE, UPDATE, LIKE, COMMENT} from '../constants/actionTypes'
 
 //Action Creators
 export const getPost = (id) => async (dispatch) => {
@@ -33,7 +33,6 @@ export const getPostsBySearch = (searchQuery) => async (dispatch) => {
 
     dispatch({ type: FETCH_BY_SEARCH, payload:  data  });
     dispatch({ type: END_LOADING });
-    console.log(data)
   } catch (error) {
     console.log(error);
   }
@@ -78,4 +77,16 @@ export const updatePost = (id, post) => async (dispatch) => {
       } catch (error) {
         console.log(error.message);
       }
+  }
+
+  export const commentPost = (value, id) => async (dispatch) => {
+    try {
+      const {data} = await api.comment(value, id);
+
+      dispatch({type: COMMENT, payload: data});
+
+      return data.comments;
+    } catch (error) {
+      console.log(error.message);
+    }
   }

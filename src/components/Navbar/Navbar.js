@@ -4,22 +4,22 @@ import useStyles from './styles'
 import jwt_decode from "jwt-decode";
 import memoriesLogo from '../../assets/memoriesLogo.png';
 import memoriesText from '../../assets/memoriesText.png';
-import {Link, useNavigate, useLocation} from 'react-router-dom'
+import {Link, useLocation} from 'react-router-dom'
 import {useDispatch} from 'react-redux'
 
 
 const Navbar = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const history = useNavigate();
     const location = useLocation();
     const [ user, setUser ] = useState(JSON.parse(localStorage.getItem('profile')));
     const logout = () => {
         dispatch({type: 'LOGOUT'})
-
-        history('/auth')
-
+        
         setUser(null);
+
+        window.location.reload();
+
     }
     useEffect(()=>{
         const token = user?.token;
